@@ -90,6 +90,13 @@ const Home = ({navigation}: HomeProps) => {
           style={styles.button}>
           <Text style={styles.text}>Notes</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('SplashScreen');
+          }}
+          style={styles.button}>
+          <Text style={styles.text}>SplashScreen</Text>
+        </TouchableOpacity>
         <Comp />
       </View>
     </StyleProvider>
