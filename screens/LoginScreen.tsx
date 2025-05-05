@@ -4,6 +4,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../AppNavigator';
 import {StyleSheet} from 'react-native';
 import CommonTextInput from '../components/CommonTextInput';
+import {useAuth} from './context/AuthProvider';
 
 interface MyProps {
   navigation: StackNavigationProp<RootStackParamList, 'LoginScreen'>;
@@ -14,6 +15,8 @@ const LoginScreen = ({navigation}: MyProps) => {
   const [password, setPassword] = useState('');
   const [badEmail, setBadEmail] = useState(false);
   const [badPassword, setBadPassword] = useState(false);
+
+  const {login} = useAuth();
 
   const validation = () => {
     let isValid = true;
@@ -35,7 +38,7 @@ const LoginScreen = ({navigation}: MyProps) => {
     return isValid;
   };
 
-  const login = async () => {
+  const loginScreen = async () => {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     const body = {email: email, password: password};
@@ -93,11 +96,15 @@ const LoginScreen = ({navigation}: MyProps) => {
         </Text>
         <TouchableOpacity
           style={styles.loginButton}
+          // onPress={() => {
+          //   if (validation()) {
+          //     loginScreen();
+          //     console.log('Login successful::::::');
+          //   }
+          // }}>
           onPress={() => {
-            if (validation()) {
-              login();
-              console.log('Login successful::::::');
-            }
+            login(email, password);
+            navigation.navigate('HomeScreen');
           }}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>
